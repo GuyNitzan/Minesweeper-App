@@ -1,0 +1,55 @@
+body {
+  margin: 20px;
+  padding: 0;
+  font-family: sans-serif;
+  color: aliceblue;
+  background-image: url("background.jpg");
+}
+input {
+  width: 100px;
+  margin-right: 10px;
+}
+.winColor{
+  color: rgb(0, 200, 0);
+}
+.loseColor {
+  color: red;
+}
+button {
+  margin-left: 30px;
+}
+.redCell {
+  background-color: red;
+}
+.board{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 50vh;
+}
+
+.cell {
+  border: 1px solid white;
+  float: left;
+  line-height: 34px;
+  height: 34px;
+  text-align: center;
+  width: 34px;
+  cursor: pointer;
+  -ms-user-select: none; /* IE 10+ */
+  -moz-user-select: none; /* Gecko (Firefox) */
+  -webkit-user-select: none; /* Webkit (Safari, Chrome) */
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+.revealed {
+  opacity: 0.5;
+}
+.hidden {
+  background: rgb(0, 140, 0);
+}
