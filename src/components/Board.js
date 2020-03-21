@@ -1,11 +1,11 @@
 import React from 'react';
 import Cell from './Cell';
-import {ErrorMessage} from "./Game";
+import * as Constants from "../constants";
 
 export default class Board extends React.Component {
     state = {
         board: this.initBoard(),
-        gameStatus: GameStatus.ongoing,
+        gameStatus: Constants.GameStatus.ongoing,
         mineCount: this.props.mines
     };
 
@@ -146,7 +146,7 @@ export default class Board extends React.Component {
     }
 
     handleCellClick(event, x, y) {
-        if (this.state.gameStatus !== GameStatus.ongoing) {
+        if (this.state.gameStatus !== Constants.GameStatus.ongoing) {
             return;
         }
         if (event.shiftKey) {
@@ -164,12 +164,12 @@ export default class Board extends React.Component {
         if ((!this.props.superman && updatedData[x][y].isRevealed) || updatedData[x][y].isFlagged) {
             return;
         }
-        let win = GameStatus.ongoing;
+        let win = Constants.GameStatus.ongoing;
         // check if mine. game over if true
         if (updatedData[x][y].isMine) {
             updatedData[x][y].isRed = true;
             this.revealBoard();
-            win = GameStatus.lose;
+            win = Constants.GameStatus.lose;
         }
         else {
             updatedData[x][y].isRevealed = true;
@@ -177,7 +177,7 @@ export default class Board extends React.Component {
                 updatedData = this.revealSurroundingCells(x, y, updatedData);
             }
             if (this.isWin(updatedData)) {
-                win = GameStatus.win;
+                win = Constants.GameStatus.win;
                 this.revealBoard();
             }
         }
@@ -191,7 +191,7 @@ export default class Board extends React.Component {
     handleCellFlagged(x, y) {
         let updatedData = this.state.board;
         let mines = this.state.mineCount;
-        let win = GameStatus.ongoing;
+        let win = Constants.GameStatus.ongoing;
 
         if (updatedData[x][y].isRevealed && !updatedData[x][y].isFlagged) return;
         if (updatedData[x][y].isFlagged) {
@@ -206,7 +206,7 @@ export default class Board extends React.Component {
             updatedData[x][y].isRevealed = true;
             mines--;
             if (mines === 0 && this.isWin(updatedData)) {
-                win = GameStatus.win;
+                win = Constants.GameStatus.win;
                 this.revealBoard();
             }
         }
@@ -249,10 +249,10 @@ export default class Board extends React.Component {
 
     // initializes a new board. called when the user starts a new game
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props !== prevProps && this.props.errorMessage === ErrorMessage.noError) {
+        if (this.props !== prevProps && this.props.errorMessage === Constants.ErrorMessage.noError) {
             this.setState({
                 board: this.initBoard(),
-                gameStatus: GameStatus.ongoing,
+                gameStatus: Constants.GameStatus.ongoing,
                 mineCount: this.props.mines,
                 superman: this.props.superman
             });
@@ -276,7 +276,7 @@ export default class Board extends React.Component {
     }
 
     gamesStatusColor() {
-        return this.state.gameStatus === GameStatus.win ? "winColor" : "loseColor";
+        // eslint-disable-next-line no-undef
+        return this.state.gameStatus === Constants.GameStatus.win ? "winColor" : "loseColor";
     }
 }
-export const GameStatus = Object.freeze({"win":"You Win!", "lose":"You Lose!", "ongoing":" "});

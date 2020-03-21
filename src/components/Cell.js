@@ -1,21 +1,22 @@
 import React from 'react';
+import * as Constants from "../constants";
 
 export default class Cell extends React.Component {
 
     getValue(){
-        return this.props.value.isRevealed || this.props.value.superman ? this.getCellContent() : CellContent.empty;
+        return this.props.value.isRevealed || this.props.value.superman ? this.getCellContent() : Constants.CellContent.empty;
     }
 
     // get the value to display if the cell is revealed
     getCellContent = () => {
         if (this.props.value.isFlagged) {
-            return CellContent.flag;
+            return Constants.CellContent.flag;
         } else if (this.props.value.isMine) {
-            return CellContent.bomb;
+            return Constants.CellContent.bomb;
         } else if (this.props.value.neighbour) {
-            return CellContent.neighbourToString(this.props.value.neighbour);
+            return Constants.CellContent.neighbourToString(this.props.value.neighbour);
         } else {
-            return CellContent.empty;
+            return Constants.CellContent.empty;
         }
     }
 
@@ -30,9 +31,3 @@ export default class Cell extends React.Component {
         );
     }
 }
-export const CellContent = Object.freeze({
-    bomb: "💣",
-    flag: "🚩",
-    neighbourToString: (nbr) => nbr.toString(),
-    empty: null
-});
